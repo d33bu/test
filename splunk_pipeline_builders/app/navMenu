@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav>\n    <view name=\"edge-processors\" default=\"true\" />\n    <view name=\"search\" />\n    <view name=\"analytics_workspace\" />\n    <view name=\"datasets\" />\n    <view name=\"reports\" />\n    <view name=\"alerts\" />\n    <view name=\"dashboards\" />\n</nav>",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]

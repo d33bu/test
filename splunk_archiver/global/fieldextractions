@@ -1,0 +1,11 @@
+[
+{
+"name": "severity,logger",
+"origName": "source::.../var/log/splunk/splunk_archiver.log(.\\d+)? : EXTRACT-severity,logger",
+"owner": "nobody",
+"sharing": "global",
+"stanza": "source::.../var/log/splunk/splunk_archiver.log(.\\d+)?",
+"type": "EXTRACT",
+"value": ".*?(?<severity>[A-Z]+) ((?<logger>[^\\s]+) \\-)*"
+}
+]

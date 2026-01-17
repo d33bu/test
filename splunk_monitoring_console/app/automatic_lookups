@@ -1,0 +1,110 @@
+[
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "audittrail : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "audittrail",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "http_event_collector_metrics : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "http_event_collector_metrics",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "kvstore : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "kvstore",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "mongod : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "mongod",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "scheduler : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "scheduler",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "splunk_disk_objects : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunk_disk_objects",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "splunk_resource_usage : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunk_resource_usage",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "splunkd : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "splunkd_access : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_access",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "splunkd_conf : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "splunkd_remote_searches : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_remote_searches",
+"transform": "dmc_assets"
+},
+{
+"name": "LOOKUP-dmc_add_instance_info",
+"origName": "wlm_monitor : LOOKUP-dmc_add_instance_info",
+"overwrite": "0",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "wlm_monitor",
+"transform": "dmc_assets"
+}
+]

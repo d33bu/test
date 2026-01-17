@@ -1,0 +1,83 @@
+[
+{
+"args": "text",
+"definition": "\"\"",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "comment(1)",
+"owner": "admin",
+"sharing": "app"
+},
+{
+"definition": "0",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "requestingAddress",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "host=*",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "searchheadhosts",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "splunk_kom:splunk_vc_kom_audit_summary",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "splunk_vc_ko_query",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "Prod",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "splunk_vc_name",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "30",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "splunk_vc_timeout",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "https://localhost:8089/services/splunkversioncontrol_rest_restore",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "splunk_vc_url",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "0",
+"disabled": "0",
+"eai:appName": "SplunkVersionControl",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "sslVerify",
+"owner": "nobody",
+"sharing": "app"
+}
+]

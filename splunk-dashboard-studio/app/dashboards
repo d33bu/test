@@ -1,0 +1,555 @@
+[
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Ad Hoc Data Source</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-ad-hoc-data",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Advanced Show/Hide</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-advanced-showhide",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Airport KPIs</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-airport-kpis-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Application Service Health Monitoring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-application-service-health-monitoring-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Area</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-area-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Assembly Line</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-assembly-line-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Bar</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-bar-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Base and Chain Data Sources</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-base-chain-data",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Bubble</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-bubble-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Buttercup Battle Top Players</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-buttercup-battle-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Cascading Inputs</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-cascading-inputs",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Chart Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-chart-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Display Axis, Labels, Legends</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-chart-display",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Chart Overlays</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-chart-overlays",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Chart Scaling</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-chart-scaling",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Choropleth SVG</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-choropleth-svg-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Column</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-column-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Drilldown to Custom URL</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-custom-url-drilldown",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Customer Satisfaction</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-customer-satisfaction-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Data Command and Control</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-data-command-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Data Governance</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-data-governance-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Data Streaming</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-data-streaming-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Datacenter Sensors</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-datacenter-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Dropdown</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-dropdown-input",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>E-Commerce Monitoring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-ecommerce-monitoring-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Emergency Department Care</label>\n</view>\n\n\n",
+"eai:type": "views",
+"name": "example-hub-emergency-department-care-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Europe Telecom Network Hub</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-europe-telecom-network-hub-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Chart Annotations</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-event-annotations",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Filler Gauge Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-filler-gauge-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Filler Gauge</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-filler-gauge-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Healthcare Dashboard</label>\n</view>\n\n\n",
+"eai:type": "views",
+"name": "example-hub-healthcare-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Icon Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-icon-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Icons</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-icon-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Images</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-image-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Line</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-line-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Link Graph</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-link-graph-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Map</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-map-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Markdown</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-markdown-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Marker Gauge Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-marker-gauge-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Marker Gauge</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-marker-gauge-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Moving SVGs</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-moving-svg-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Multiselect</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-multiselect-input",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Home</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-nav-visualizations",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Number Input</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-number-input",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Parallel Coordinates</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-parallel-coordinates-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Pie</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-pie-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Progress Bar</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-progress-bar-defaults",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Punchcard Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-punchcard-chart-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Punchcard Sizing</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-punchcard-chart-sizing",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Punchcard</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-punchcard-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Refresh</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-refresh-defaults",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Sankey Diagram</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-sankey-diagram-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Saved Search Data Source</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-saved-data",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Scatter</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-scatter-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Evaluate Tokens Using Search</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-search-tokens",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Employee Device Security</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-security-devices-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>VPN Health by Region</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-security-network-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>VPN Health by Region</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-security-summary-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Set Token Drilldown</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-set-token-drilldown",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Set a Token Default</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-set-token-drilldown-default",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Set Token from Search</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-set-token-search",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Shapes and Lines</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-shape-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Single Value Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-single-value-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Single Value Emoji</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-single-value-emojis",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Single Value Icon</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-single-value-icon-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Radial Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-single-value-radial-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Single Value Radial</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-single-value-radial-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Single Value</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-single-value-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Submit Button</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-submit-button",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Table Coloring</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-table-chart-coloring",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Table Formatting</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-table-chart-formatting",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Table</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-table-chart-visualization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Test Data Source</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-test-data",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Text Input</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-text-input",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Time Range Input</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-timerange-input",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Trellis Layout</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-trellis-layout",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>VPN Health by Region</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-vpn-health-by-region-dashboard",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Workforce Readiness</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-workplace-readiness",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-dashboard-studio:/templates/example-hub.html\" type=\"html\">\n    <label>Workforce Readiness Detail</label>\n</view>",
+"eai:type": "views",
+"name": "example-hub-workplace-readiness-detail",
+"owner": "nobody",
+"sharing": "app"
+}
+]

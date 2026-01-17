@@ -1,0 +1,30 @@
+[
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_app_for_splunk_o11y_cloud:/templates/start.html\" type=\"html\">\n    <label>Configuration</label>\n</view>",
+"eai:type": "views",
+"name": "config",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_app_for_splunk_o11y_cloud:/templates/start.html\" type=\"html\">\n\t<label>Getting started</label>\n</view>",
+"eai:type": "views",
+"name": "gettingstarted",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_app_for_splunk_o11y_cloud:/templates/start.html\" type=\"html\">\n\t<label>Observability overview</label>\n</view>",
+"eai:type": "views",
+"name": "home",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_app_for_splunk_o11y_cloud:/templates/start.html\" type=\"html\">\n\t<label>Use cases</label>\n</view>",
+"eai:type": "views",
+"name": "usecases",
+"owner": "nobody",
+"sharing": "app"
+}
+]

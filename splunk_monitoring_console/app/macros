@@ -1,0 +1,1323 @@
+[
+{
+"definition": "eval search_type = case( \nmatch(search_id, \"^SummaryDirector_\"), \"summarization\", \nmatch(search_id, \"^((rt_)?scheduler__|alertsmanager_)\"), \"scheduled\", \nmatch(search_id, \"\\d{10}\\.\\d+(_[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12})?$\"), \"ad hoc\", \ntrue(), \"other\")",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_audit_get_search_type",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host",
+"definition": "`dmc_set_index_audit` host=$host$ action=search sourcetype=audittrail search_id!=\"rsa_*\" \n| eval user = if(user=\"n/a\", null(), user) \n| `dmc_audit_get_search_type` \n| eval search=if(isnull(savedsearch_name) OR savedsearch_name==\"\", search, savedsearch_name)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_audit_get_searches(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "search_group",
+"definition": "`dmc_set_index_audit` search_group=dmc_group_search_head search_group=\"$search_group$\" action=search sourcetype=audittrail search_id!=\"rsa_*\" \n| eval user = if(user=\"n/a\", null(), user) \n| `dmc_audit_get_search_type` \n| eval search=if(isnull(savedsearch_name) OR savedsearch_name==\"\", search, savedsearch_name)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_audit_get_searches_for_groups(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "filter",
+"definition": "search `dmc_set_index_audit` action=search (id=* OR search_id=*) | eval search_id = if(isnull(search_id), id, search_id) | replace '*' with * in search_id | search $filter$",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_audit_searchlocal(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=percent \"0-10%\"=0-10 \"10-50%\"=10.001-50 \"50-100%\"=50.001-100 default=abnormal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_background_flush_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "sparkline_span",
+"definition": "`dmc_get_forwarder_tcpin` \n| stats values(fwdType) as forwarder_type, latest(version) as version, values(arch) as arch, values(os) as os, max(_time) as last_connected, latest(_time) as _time, sum(kb) as new_sum_kb, sparkline(avg(tcp_KBps), $sparkline_span$) as new_avg_tcp_kbps_sparkline, avg(tcp_KBps) as new_avg_tcp_kbps, avg(tcp_eps) as new_avg_tcp_eps by guid, hostname",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_build_forwarder_assets(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "eval process_class = case(    \n    process==\"splunk-optimize\",\"index service\",    \n    process==\"sh\" OR process==\"ksh\" OR process==\"bash\" OR like(process,\"python%\") OR process==\"powershell\",\"scripted input\",    \n    process==\"mongod\", \"KVStore\") \n| eval process_class = case(    \n    process==\"splunkd\" AND (like(args,\"-p %start%\") OR like(args,\"service\") OR like(args,\"%_internal_launch_under_systemd%\")),\"splunkd server\",    \n    process==\"splunkd\" AND isnotnull(sid),\"search\",    \n    process==\"splunkd\" AND (like(args,\"fsck%\") OR like(args,\"recover-metadata%\") OR like(args,\"cluster_thing\")),\"index service\",    \n    process==\"splunkd\" AND args==\"instrument-resource-usage\", \"scripted input\",\n    (like(process,\"python%\") AND like(args,\"%/appserver/mrsparkle/root.py%\")) OR like(process,\"splunkweb\"),\"Splunk Web\",    \n    isnotnull(process_class), process_class)    \n| eval process_class = if(isnull(process_class),\"other\",process_class)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_classify_processes",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "collection_interval = 10",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_collection_interval",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "x",
+"definition": "case( \n$x$ >= 1000000000000, round($x$ / 1000000000000, 2).\"T\", \n$x$ >= 1000000000, round($x$ / 1000000000, 2).\"B\", \n$x$ >= 1000000, round($x$ / 1000000, 2).\"M\", \n$x$ >= 1000, round($x$ / 1000, 2).\"K\", \ntrue(), $x$ \n)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_convert_count_unit(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "x",
+"definition": "case( \n$x$ > 1000000, round($x$ / 1024 / 1024, 2).\" TB\" \n$x$ > 1000, round($x$ / 1024, 2).\" GB\" \n1 == 1, $x$.\" MB\" \n)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_convert_disk_usage_unit(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "runtime",
+"definition": "case( \nround($runtime$ / (3600*24) - 0.5) > 0, round($runtime$ / (3600*24) - 0.5).\"d \".round(($runtime$ % (3600*24)) / 3600 - 0.5).\"h \".round(($runtime$ % 3600) / 60 - 0.5).\"min \".round($runtime$ % 60, 2).\"s\", \nround(($runtime$ % (3600*24)) / 3600 - 0.5) > 0, round(($runtime$ % (3600*24)) / 3600 - 0.5).\"h \".round(($runtime$ % 3600) / 60 - 0.5).\"min \".round($runtime$ % 60, 2).\"s\", \nround(($runtime$ % 3600) / 60 - 0.5) > 0, round(($runtime$ % 3600) / 60 - 0.5).\"min \".round($runtime$ % 60, 2).\"s\", \n1 = 1, round($runtime$ % 60, 2).\"s\" \n)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_convert_runtime(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=cpu_usage \"0-60%\"=0-60 \"60-80%\"=60.001-80 \"80-100%\"=80.001-100 \"100%+\"=100.001-999999 default=abnormal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_cpu_usage_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_cpu_usage_rangemap` \n| `dmc_timechart` partial=f dc(server) as server_count by range \n| fields _time, \"100%+\", \"80-100%\", \"60-80%\", \"0-60%\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_cpu_usage_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rest `dmc_dmc_group_license_master` /services/licenser/pools \n| join type=outer stack_id splunk_server [rest `dmc_dmc_group_license_master` /services/licenser/groups | search is_active=1 | eval stack_id=stack_ids | fields splunk_server stack_id is_active] \n| search is_active=1 \n| fields splunk_server, stack_id, used_bytes \n| join type=outer stack_id splunk_server [rest `dmc_dmc_group_license_master` /services/licenser/stacks | eval stack_id=title | eval stack_quota=quota | fields splunk_server stack_id stack_quota] \n| stats sum(used_bytes) as used_bytes max(stack_quota) as stack_quota by splunk_server \n| eval usedGB=round(used_bytes/1024/1024/1024,3) \n| eval totalGB=round(stack_quota/1024/1024/1024,3) \n| eval percentage=round(usedGB / totalGB, 3)*100 \n| fields splunk_server, percentage, usedGB, totalGB",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_daily_license_usage_quota",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=pct_disk_usage \"0-60%\"=0-0.6 \"60-80%\"=0.6001-0.8 \"80-100%\"=0.8001-1 default=abnormal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_disk_usage_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_disk_usage_rangemap` \n| `dmc_timechart_for_disk_usage` partial=f dc(server_mount_point) as server_mount_point_count by range \n| fields _time, \"80-100%\", \"60-80%\", \"0-60%\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_disk_usage_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "splunk_server_group=dmc_group_license_master",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_dmc_group_license_master",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group, metric",
+"definition": "`dmc_set_index_internal` source=*metrics.log* sourcetype=splunkd search_group=dmc_group_indexer search_group=$group$ group=thruput name=index_thruput \n| stats sum(kb) AS total_kb by host \n| addinfo \n| eval time_window = info_max_time - info_min_time \n| eval kbps = round(total_kb / time_window, 0) \n| `dmc_indexing_rate_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" dmc_group_indexer\" \n| fields serverName, machine, kbps, range, numberOfCores, ram, version, Action\n| eval kbps = kbps.\" KB/s\" \n| rename serverName as Instance, machine as Machine, kbps as \"Indexing Rate\", range as \"Indexing Rate Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_indexing_performance_deployment_indexing_rate(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group, queueType, funcQueue, metric",
+"definition": "`dmc_set_index_internal` source=*metrics.log sourcetype=splunkd search_group=dmc_group_indexer search_group=$group$ group=queue name=$queueType$ \n| eval max=if(isnotnull(max_size_kb),max_size_kb,max_size) \n| eval curr=if(isnotnull(current_size_kb),current_size_kb,current_size) \n| eval fill_perc=round((curr/max)*100,2) \n| stats $funcQueue$(fill_perc) AS fill_percentage by host \n| `dmc_queue_fill_ratio_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" dmc_group_indexer\" \n| fields serverName, machine, fill_percentage, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, fill_percentage as \"Fill Ratio (%)\", range as \"Fill Ratio Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_indexing_performance_deployment_queue_fill_ratio(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "lookup dmc_assets host OUTPUT peerURI, serverName, machine \n| eval peerURI = mvindex(peerURI, 0) \n| eval machine = mvindex(machine, 0) \n| eval serverName = mvindex(serverName, 0) \n| join type=outer peerURI \n [| rest splunk_server=local /services/search/distributed/peers \n  | rename title as peerURI \n  | append  \n    [| rest splunk_server=local /services/server/info \n     | eval peerURI = \"localhost\" \n    ] \n  | eval ram = round(physicalMemoryMB / 1024, 2).\" GB\" \n  | fields peerURI, version, numberOfCores, ram \n ] \n| eval Action = serverName \n| fields - _time",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_join_peers_by_peerURI",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group, metric",
+"definition": "`dmc_set_index_introspection` search_group=$group$ search_group=dmc_group_kv_store component=kvstoreserverstats \n| spath \"data.wiredTiger.capacity.background fsync time (msecs)\" output=flush_ms \n| eval flush=if(isNull(data.backgroundFlushing.total_ms), flush_ms, data.backgroundFlushing.total_ms) \n| stats range(flush)  AS diff by  host \n| addinfo \n| eval time_window = info_max_time - info_min_time \n| eval ms_per_min = diff / (time_window / 60) \n| eval percent = round(ms_per_min / (60 * 1000) * 100, 2) \n| `dmc_background_flush_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" dmc_group_kv_store\" \n| fields serverName, machine, percent, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, percent as \"Background Flush (%)\", range as \"Background Flush Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_kv_store_deployment_background_flush(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group, countLockFunc, metric",
+"definition": "`dmc_set_index_introspection` search_group=dmc_group_kv_store  search_group=$group$ component=kvstoreserverstats \n| stats range(data.globalLock.lockTime) AS globalLock range(data.globalLock.totalTime) AS total by host  \n| eval percent=abs(globalLock*100/total)   \n| stats $countLockFunc$(percent) as percent_locked by host \n| rangemap field=percent_locked \"0-30%\"=0-30 \"30-50%\"=30.001-50 \"50-100%\"=50.001-1000 default=abnormal  \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" dmc_group_kv_store\" \n| fields serverName, machine, percent_locked, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, percent_locked as \"Lock (%)\", range as \"Lock Percentage Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_kv_store_deployment_lock_percentage(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group, metric",
+"definition": "`dmc_set_index_introspection` search_group=$group$ search_group=dmc_group_kv_store component=kvstoreserverstats \n| spath \"data.mem.resident\" output=physical \n| spath \"data.mem.virtual\" output=virtual \n| spath \"data.mem.mappedWithJournal\" output=mappedWithJournal \n| eval ratio=if(isNull(mappedWithJournal), virtual/physical, virtual/mappedWithJournal) \n| stats avg(ratio) AS myratio by host  \n| eval myratio = round(myratio, 2) \n| rangemap field=myratio \"0-2x\"=0-2 \"2-3x\"=2.001-3 \">3x\"=3.001-10000 default=abnormal \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" dmc_group_kv_store\" \n| fields serverName, machine, myratio, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, myratio as \"Virtual to Mapped Ratio\", range as \"Ratio Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_kv_store_deployment_memory_ratio(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group",
+"definition": "`dmc_set_index_introspection` search_group=dmc_group_kv_store search_group=$group$ component=kvstoreserverstats \n| stats range(data.network.bytesIn) as indiff range(data.network.bytesOut) as outdiff range(data.network.numRequests) as Requests by host \n| eval \"MB In\"=indiff/1000000 \n| eval \"MB Out\"=outdiff/1000000 \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" dmc_group_kv_store\" \n| table serverName, machine, \"MB In\", \"MB Out\", Requests, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_kv_store_deployment_network(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group, countPageFaultsFunc, metric",
+"definition": "`dmc_set_index_introspection` search_group=dmc_group_kv_store search_group=$group$ component=kvstoreserverstats  \n| rename data.opcounters.command as c, data.opcounters.update as u, data.opcounters.queries as q, data.opcountes.deletes as d, data.opcounters.getmore as g, data.opcounters.inserts as i \n| eval commands=if(isNotNull('c'), 'c',0) \n| eval updates=if(isNotNull('u'), 'u', 0) \n| eval queries=if(isNotNull('q'), 'q', 0) \n| eval deletes=if(isNotNull('d'), 'd', 0) \n| eval getmores=if(isNotNull('g'), 'g', 0) \n| eval inserts=if(isNotNull('i'), 'i', 0) \n| eval totalops=commands+updates+queries+deletes+getmores+inserts \n| bin _time minspan=30s \n| stats latest(totalops) AS ops latest(data.extra_info.page_faults) AS pf by host _time \n| eval  percent=if(opsdiff==0, 0, round(abs(pf/ops), 2))   \n| stats $countPageFaultsFunc$(percent) as percent by host  \n| rangemap field=percent \"0-0.7\"=0-0.7 \"0.7-1.3\"=0.7001-1.3 \"1.3+\"=1.3001-999999 default=abnormal  \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" dmc_group_kv_store\" \n| fields serverName, machine, percent, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, percent as \"Page Faults per Operation\", range as \"Page Fault Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_kv_store_deployment_page_faults(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group, metric",
+"definition": "`dmc_set_index_introspection` search_group=$group$ search_group=dmc_group_kv_store component=kvstorereplicasetstats data.replSetStats.myState=1 \n| spath data.replSetStats.members{}.name output=name \n| spath data.replSetStats.members{}.optimeDate output=optimeDate \n| spath data.replSetStats.members{}.stateStr output=stateStr \n| spath data.replSetStats.date output=date \n| eval prop_key_val=mvzip(mvzip(name, optimeDate, \"---\"), stateStr, \"---\") \n| fields _time, date, prop_key_val \n| mvexpand prop_key_val \n| eval name=mvindex(split(prop_key_val, \"---\"), 0) \n| eval optimeDate=mvindex(split(prop_key_val, \"---\"), 1) \n| eval stateStr=mvindex(split(prop_key_val, \"---\"), 2) \n| where stateStr=\"SECONDARY\" \n| join _time \n  [ search `dmc_set_index_introspection` search_group=dmc_group_kv_store component=kvstorereplicasetstats data.replSetStats.myState=1 \n  | spath data.replSetStats.members{}.name output=name \n  | spath data.replSetStats.members{}.optimeDate output=optimeDate \n  | spath data.replSetStats.members{}.stateStr output=stateStr \n  | spath data.replSetStats.date output=date \n  | eval prop_key_val=mvzip(mvzip(name, optimeDate, \"---\"), stateStr, \"---\") \n  | fields _time, date, prop_key_val \n  | mvexpand prop_key_val \n  | eval name=mvindex(split(prop_key_val, \"---\"), 0) \n  | eval optimeDate=mvindex(split(prop_key_val, \"---\"), 1) \n  | eval stateStr=mvindex(split(prop_key_val, \"---\"), 2) \n  | where stateStr=\"PRIMARY\" \n  | stats max(optimeDate) as primary by _time] \n| eval name=mvindex(split(name, \":\"), 0) \n| eval lag=(primary-optimeDate)/1000 \n| eventstats max(date) as max_date by name \n| stats avg(lag) as lag by name stateStr max_date \n| eval lag = round(lag, 2) \n| `dmc_replication_lag_rangemap` \n| where range=\"$metric$\" \n| eval date = max_date/1000 \n| eval date = strftime(date, \"%m/%d/%Y %H:%M:%S %z\") \n| rename name as Instance, lag as Lag, range as \"Lag Range\", stateStr as State, date as \"Oplog Date\" \n| table Instance Lag \"Oplog Date\" \"Lag Range\" State",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_kv_store_deployment_replication_lag(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group",
+"definition": "`dmc_set_index_introspection` search_group=$group$ search_group=dmc_group_kv_store component=kvstorereplicasetstats data.replSetStats.myState=1 \n| eval Instance=host \n| rename data.oplogInfo.start as start, data.oplogInfo.end as end \n| eval start = start/1000 \n| eval end = end/1000 \n| eval diff= (end-start)/3600 \n| `dmc_time_format(start)` \n| `dmc_time_format(end)` \n| stats first(start) as \"Start Date\" first(end) as \"End Date\" first(diff) as \"Window (Hours)\" by Instance",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_kv_store_primary_oplog_window(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role, group, role_post_filter, countCPUFunc, metric",
+"definition": "`dmc_set_index_introspection` search_group=$role$ search_group=$group$ $role_post_filter$ sourcetype=splunk_resource_usage component=Hostwide \n| eval total_cpu_usage = 'data.cpu_system_pct' + 'data.cpu_user_pct' \n| stats $countCPUFunc$(total_cpu_usage) as cpu_usage by host \n| `dmc_cpu_usage_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" $role$\" \n| fields serverName, machine, cpu_usage, range, numberOfCores, ram, version, Action \n| eval cpu_usage = cpu_usage.\" %\" \n| rename serverName as Instance, machine as Machine, cpu_usage as \"CPU Usage\", range as \"CPU Usage Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_resource_usage_cpu_deployment_usage(5)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role, group, countCPUFunc, metric",
+"definition": "`dmc_set_index_introspection` search_group=$role$ search_group=$group$ sourcetype=splunk_resource_usage component=Hostwide \n| eval total_cpu_usage = 'data.cpu_system_pct' + 'data.cpu_user_pct' \n| stats $countCPUFunc$(total_cpu_usage) as cpu_usage by host \n| `dmc_cpu_usage_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" $role$\" \n| fields serverName, machine, cpu_usage, range, numberOfCores, ram, version, Action \n| eval cpu_usage = cpu_usage.\" %\" \n| rename serverName as Instance, machine as Machine, cpu_usage as \"CPU Usage\", range as \"CPU Usage Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_resource_usage_deployment_cpu_usage(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role, group, countDiskFunc, metric",
+"definition": "`dmc_set_index_introspection` search_group=$role$ search_group=$group$ sourcetype=splunk_disk_objects component=Partitions \n| eval mount_point = 'data.mount_point' \n| eval free = if(isnotnull('data.available'), 'data.available', 'data.free') \n| eval pct_disk_usage = round(1 - free / 'data.capacity', 2) \n| eval server_mount_point = host.\":\".mount_point \n| stats $countDiskFunc$(pct_disk_usage) as pct_disk_usage by server_mount_point \n| `dmc_disk_usage_rangemap` \n| where range=\"$metric$\" \n| eval host = replace(server_mount_point, \":.*\", \"\") \n| eval mount_point = replace(server_mount_point, \".*:\", \"\") \n| eval pct_disk_usage = pct_disk_usage * 100 \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" $role$\" \n| fields serverName, machine, mount_point, pct_disk_usage, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, mount_point as \"Mount Point\", pct_disk_usage as \"Disk Usage (%)\", range as \"Disk Usage Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_resource_usage_deployment_disk_usage(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role, group, countLoadAvgFunc, metric",
+"definition": "`dmc_set_index_introspection` search_group=$role$ search_group=$group$ sourcetype=splunk_resource_usage component=Hostwide \n| stats $countLoadAvgFunc$(data.normalized_load_avg_1min) as load_average by host \n| `dmc_load_average_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" $role$\" \n| fields serverName, machine, load_average, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, load_average as \"Load Average\", range as \"Load Average Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_resource_usage_deployment_load_average(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role, group, countMemFunc, metric",
+"definition": "`dmc_set_index_introspection` search_group=$role$ search_group=$group$ sourcetype=splunk_resource_usage component=Hostwide \n| eval pct_mem_used = 'data.mem_used' / 'data.mem' \n| stats $countMemFunc$(pct_mem_used) as pct_mem_used by host \n| `dmc_memory_usage_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" $role$\" \n| fields serverName, machine, pct_mem_used, range, numberOfCores, ram, version, Action \n| eval pct_mem_used = round(pct_mem_used * 100, 2) \n| eval pct_mem_used = pct_mem_used.\" %\" \n| rename serverName as Instance, machine as Machine, pct_mem_used as \"Memory Usage\", range as \"Memory Usage Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_resource_usage_deployment_memory_usage(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role, group, resourceType, resourceFunction, metric",
+"definition": "`dmc_set_index_introspection` search_group=$role$ search_group=$group$ sourcetype=splunk_resource_usage ((component=PerProcess data.search_props.sid::*) OR component=Hostwide) \n| `dmc_rename_introspection_fields` \n| eval sid = if(component==\"Hostwide\", \"n/a\", sid) \n| eval pid = if(component==\"Hostwide\", \"n/a\", pid) \n| eval pct_cpu = if(component==\"Hostwide\", 0, pct_cpu) \n| eval mem_used = if(component==\"Hostwide\", 0, mem_used) \n| `dmc_set_bin` \n| stats latest($resourceType$) AS resource_usage_dedup values(Action) as Action by _time, sid, pid, host \n| stats sum(resource_usage_dedup) AS sum_resource_usage values(Action) as Action by _time, host \n| stats $resourceFunction$(sum_resource_usage) as resource_usage values(Action) as Action by host \n| `dmc_$resourceType$_rangemap` \n| where range == \"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" $role$\" \n| fields serverName, machine, resource_usage, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, resource_usage as \"$resourceType$ Usage\", range as \"$resourceType$ Usage Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_search_activity_deployment_resource_usage(5)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role, group, searchFunction, metric",
+"definition": "`dmc_set_index_introspection` search_group=$role$ search_group=$group$ sourcetype=splunk_resource_usage ((component=PerProcess data.search_props.sid::*) OR component=Hostwide) \n| `dmc_rename_introspection_fields` \n| `dmc_set_bin` \n| stats dc(sid) AS distinct_search_count values(Action) as Action by host, _time \n| stats $searchFunction$(distinct_search_count) as search_count values(Action) as Action by host \n| `dmc_search_count_rangemap` \n| where range=\"$metric$\" \n| `dmc_drilldown_join_peers_by_peerURI` \n| eval Action = Action.\" $role$\" \n| fields serverName, machine, search_count, range, numberOfCores, ram, version, Action \n| rename serverName as Instance, machine as Machine, search_count as \"Count of Searches\", range as \"Count of Searches Range\", version as Version, numberOfCores as Cores, ram as RAM",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_drilldown_search_activity_deployment_search_concurrency(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_set_index_audit` sourcetype=audittrail action=search search=*",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_event_local_search_dispatch",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_set_index_internal` sourcetype=splunkd_remote_searches \"Streamed search search starting\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_event_remote_search_dispatch",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "eval _dmc_title = if(isnotnull(title), title, 'data.name')\n| where NOT (_dmc_title == \"history\" OR _dmc_title == \"_thefishbucket\" OR _dmc_title == \"_blocksignature\")\n| fields - _dmc_title",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_exclude_indexes",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "eval _dmc_volume = if(isnotnull(title), title, 'data.name') \n| where NOT _dmc_volume == \"_splunk_summaries\" \n| fields - _dmc_volume",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_exclude_volumes",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "minute_offset",
+"definition": "rest splunk_server=local /servicesNS/-/splunk_monitoring_console/alerts/fired_alerts/- \n| rename savedsearch_name as title \n| join type=outer title [|rest splunk_server=local /servicesNS/-/splunk_monitoring_console/saved/searches ] \n| rename title as \"Alert Name\" \n| join type=outer sid [rest splunk_server=local /servicesNS/nobody/splunk_monitoring_console/search/jobs/] \n| eval now=relative_time(now(),\"-$minute_offset$m\") \n| where trigger_time > now \n| rename trigger_time AS \"_time\", description as \"Description\", sid AS Instance \n| convert timeformat=\"%b. %d, %Y %l:%M %p\" ctime(_time) AS \"Time Triggered\" \n| fields - _time \n| fields \"Alert Name\", Instance, \"Time Triggered\", \"Description\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_all_triggered_alerts(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "eval core_info = if(isnull(numberOfCores), \"N/A\", numberOfCores).\" / \".if(isnull(numberOfVirtualCores), \"N/A\", numberOfVirtualCores)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_core_info",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group_name",
+"definition": "rest splunk_server=local /services/search/distributed/groups \n| fields title member \n| search title=\"dmc_group_$group_name$\" \n| eval title=replace(title, \"^dmc_group_\", \"\") \n| eval servers=mvjoin(member,\",\") \n| fields title servers",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_distsearch_group_servers(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "inputlookup dmc_forwarder_assets",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_forwarder_info",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_set_index_internal` sourcetype=splunkd group=tcpin_connections (connectionType=cooked OR connectionType=cookedSSL) fwdType=* guid=*",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_forwarder_tcpin",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "inputlookup dmc_assets \n| fields search_group \n| dedup search_group \n| search search_group=\"dmc_*\" \n| `dmc_set_group_label_and_sort(search_group)`",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_groups",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role",
+"definition": "inputlookup dmc_assets \n| mvcombine search_group \n| search search_group=\"$role$\" \n| mvexpand search_group \n| fields search_group \n| dedup search_group \n| `dmc_set_group_label_and_sort(search_group)`",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_groups_containing_role(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "inputlookup dmc_assets \n| fields search_group \n| dedup search_group \n| search search_group=\"dmc_indexerclustergroup_*\" \n| eval label = replace(search_group, \"dmc_indexerclustergroup_\", \"\")",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_indexer_cluster_groups",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group",
+"definition": "inputlookup dmc_assets | mvcombine search_group | search search_group=\"$group$\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_instance_info(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "inputlookup dmc_assets \n| mvcombine search_group \n| eval role = search_group \n| mvexpand role \n| eval role = if(like(role, \"dmc_group_%\"), role, \"\") \n| eval role = replace(role, \"^dmc_group_\", \"\") \n| mvcombine role",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_instance_roles",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "machine",
+"definition": "`dmc_get_instance_info(*)` \n| where machine = \"$machine$\" \n| dedup serverName",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_instances_on_a_machine(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, sid",
+"definition": "`dmc_set_index_introspection` host=$host$ sourcetype=splunk_resource_usage component=PerProcess data.search_props.sid=\"$sid$\" earliest=-1h \n| `dmc_set_bin` \n| `dmc_rename_introspection_fields` \n| stats latest(pct_cpu) AS pct_cpu_dedup latest(mem_used) AS mem_used_dedup by _time, pid \n| stats sum(pct_cpu_dedup) AS pct_cpu_sum sum(mem_used_dedup) AS mem_used_sum by _time \n| timechart span=10s latest(pct_cpu_sum) AS pct_cpu latest(mem_used_sum) AS mem_used",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_last_hour_resource_usage_from_sid(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_get_local_instance_asset_computed_groups` \n| join type=outer peerURI [ \n| rest splunk_server=local /services/search/distributed/groups \n| fields title member \n| where isnotnull(mvfind(member, \"localhost:localhost\")) \n| eval peerURI=\"localhost\" \n| rename title AS search_groups \n| fields peerURI search_groups \n| mvcombine delim=\" \" search_groups] \n| makemv delim=\" \" search_groups \n| eval search_groups = if(isnotnull(search_groups),search_groups,computed_search_groups) \n| fields - computed_search_groups \n| mvexpand search_groups",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_local_instance_asset",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rest splunk_server=local /services/server/info \n| eval peerURI=\"localhost\" \n| eval server_roles=\"indexer,search_head,license_master,kv_store\" \n| makemv delim=\",\" server_roles \n| mvexpand server_roles \n| eval computed_search_groups=\"dmc_group_\".server_roles \n| stats first(peerURI) AS peerURI first(host) AS host first(host_fqdn) AS machine values(computed_search_groups) AS computed_search_groups by serverName",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_local_instance_asset_computed_groups",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_get_local_instance_asset_computed_groups` \n| join type=inner peerURI [ \n| rest splunk_server=local /services/search/distributed/groups \n| fields title member \n| where isnotnull(mvfind(member, \"localhost:localhost\")) \n| eval peerURI=\"localhost\" \n| rename title AS search_groups \n| fields peerURI search_groups \n| mvcombine delim=\" \" search_groups] \n| makemv delim=\" \" search_groups \n| eval search_groups = if(isnotnull(search_groups),search_groups,computed_search_groups) \n| fields - computed_search_groups \n| mvexpand search_groups",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_local_instance_asset_in_distributed_mode",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_get_instance_info(*)` \n| stats first(host) as host first(serverName) as serverName by machine",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_machine_info",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "stanza_name",
+"definition": "| rex field=$stanza_name$ \"splunktcp(-ssl)?:(\\/{1,2})?(([0-9]{1,3}\\.){3}[0-9]{1,3})?(:)?(?<port>\\d+)\" \n| eval port = if(match($stanza_name$, \"splunktcp-ssl\"), port.\" (SSL)\", port) \n| eval port = if(isnotnull(port), port, null)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_port_from_splunktcp_stanza(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "eval primary_role = case( \n    role = \"cluster_master\", \"cluster_master\", \n    role = \"search_head\", \"search_head\", \n    role = \"indexer\", \"indexer\", \n    role = \"kv_store\", \"kv_store\", \n    role = \"license_master\", \"license_master\")",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_primary_role",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rest splunk_server=local /servicesNS/-/splunk_monitoring_console/saved/searches \n|rename title as savedsearch_name \n| fields savedsearch_name, triggered_alert_count, description \n| where triggered_alert_count > 0 \n| join type=outer savedsearch_name[|rest splunk_server=local /servicesNS/-/splunk_monitoring_console/alerts/fired_alerts/- \n| cluster field=savedsearch_name] \n| join type=outer sid [rest splunk_server=local /servicesNS/nobody/splunk_monitoring_console/search/jobs/] \n| rename savedsearch_name AS \"Alert Name\", triggered_alert_count AS \"Trigger Count\", published AS \"Last time triggered\", description as \"Description\" | fields \"Alert Name\" , \"Trigger Count\", \"Last time triggered\", \"Description\", sid",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_recently_triggered_alerts",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "inputlookup dmc_assets \n| fields search_group \n| dedup search_group \n| search search_group=\"dmc_searchheadclustergroup_*\" \n| eval label = replace(search_group, \"dmc_searchheadclustergroup_\", \"\")",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_get_search_head_cluster_groups",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "search_group, component",
+"definition": "`dmc_set_index_internal` search_group=$search_group$ sourcetype=splunkd component=$component$  (log_level=WARN OR log_level=ERROR)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_get_warnings_and_errors(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=kbps \"0-50 KB/s\"=0-50 \"50-100 KB/s\"=50.001-100 \"100-500 KB/s\"=100.001-500 \"500 KB/s - 1 MB/s\"=500.001-1024 \"1-2.5 MB/s\"=1024.001-2560 \"2.5-5 MB/s\"=2560.001-5120 \"5-10 MB/s\"=5120.001-10240 \"10+ MB/s\"=10240.001-999999 default=\"NULL\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_indexing_rate_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_indexing_rate_rangemap` \n| timechart minspan=30s partial=f dc(host) AS instance_count by range \n| fields _time \"10+ MB/s\" \"5-10 MB/s\" \"2.5-5 MB/s\" \"1-2.5 MB/s\" \"500 KB/s - 1 MB/s\" \"100-500 KB/s\" \"50-100 KB/s\" \"0-50 KB/s\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_indexing_rate_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "group",
+"definition": "inputlookup dmc_assets \n| mvcombine search_group \n| rex max_match=0 field=search_group \"dmc_indexerclustergroup_(?<indexer_cluster>.*)\" \n| rex max_match=0 field=search_group \"dmc_searchheadclustergroup_(?<search_head_cluster>.*)\" \n| mvexpand search_group \n| search search_group = \"$group$\" \n| mvcombine search_group \n| join type=outer peerURI \n  [| rest splunk_server=local /services/search/distributed/peers \n   | rename title as peerURI ] \n| join type=outer peerURI \n  [| rest splunk_server=local /services/server/info \n   | eval peerURI = \"localhost\" \n   | eval status = \"Up\"] \n| join peerURI \n  [| `dmc_get_instance_roles` ] \n| eval status = if(status == \"Up\", status, \"Unreachable\") \n| eval Action = serverName.\" \".role \n| eval OS = os_name \n| eval ram = round(physicalMemoryMB / 1024, 2).\" GB\" \n| `dmc_get_core_info` \n| fields serverName, machine, role, indexer_cluster, search_head_cluster, OS, core_info, ram, version, status, Action \n| sort status, serverName \n| rename serverName as Instance, machine as Machine, role as Role, indexer_cluster as \"Indexer Cluster\", search_head_cluster as \"Search Head Cluster\", core_info as \"CPU Cores (Physical / Virtual)\", ram as RAM, version as Version, status as Status",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_instances_view_default_search(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "fieldname",
+"definition": "rangemap field=$fieldname$ \"0-60%\"=0-60 \"60-80%\"=60.0001-80, \"80-100%\"=80.0001-100 default=abnormal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_iostats_rangemap(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, field_name",
+"definition": "search [| rest splunk_server=$host$ /services/licenser/pools \n| search \n    [| rest splunk_server=$host$ /services/licenser/stacks \n    | where label != \"IT Service Intelligence Internals *DO NOT COPY*\" \n    | rename title as stack_id \n    | fields stack_id ] \n| rename title as $field_name$ \n| fields $field_name$]",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_license_non_itsi_pools(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, pool_clause",
+"definition": "`dmc_set_index_internal` host=$host$ source=*license_usage.log* type=\"RolloverSummary\" earliest=-30d@d pool=\"$pool_clause$\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_base_summary(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, pool_clause",
+"definition": "`dmc_set_index_internal` source=*license_usage.log* type=\"Usage\" | eval h=if(len(h)=0 OR isnull(h),\"(SQUASHED)\",h) | eval s=if(len(s)=0 OR isnull(s),\"(SQUASHED)\",s) | eval idx=if(len(idx)=0 OR isnull(idx),\"(UNKNOWN)\",idx) | bin _time span=1d | stats sum(b) as b by _time, host, pool, s, st, h, idx | search host=$host$ $pool_clause$",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_base_usage(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, pool_clause",
+"definition": "join type=outer _time [search `dmc_set_index_internal` host=$host$ source=*license_usage.log* type=\"RolloverSummary\" earliest=-30d@d $pool_clause$ | `dmc_license_non_itsi_pools($host$, pool)` | eval _time=_time - 43200 | bin _time span=1d | stats latest(poolsz) AS  \"pool size\" by _time] | fields - _timediff",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_pool_size_srch(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, pool_clause",
+"definition": "join type=outer _time [search `dmc_set_index_internal` host=$host$ source=*license_usage.log* type=\"RolloverSummary\" earliest=-30d@d | `dmc_license_non_itsi_pools($host$, pool)` | eval _time=_time - 43200 | bin _time span=1d | dedup _time stack | stats sum(stacksz) AS \"stack size\" by _time] | fields - _timediff",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_stack_size_srch(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, split_by_field_name, split_by_label",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b by slave, pool, _time | eval slave_guid=slave | stats sum(b) AS volume by slave_guid, _time | stats avg(volume) AS avgVolume max(volume) AS maxVolume by slave_guid | join type=outer slave_guid [rest splunk_server=$splunk_server$ /services/licenser/slaves | rename label AS slave_name title AS slave_guid | table slave_guid slave_name] | eval slave_name = if(isnotnull(slave_name),slave_name,\"GUID: \".slave_guid) | foreach *Volume [eval <<FIELD>>=round('<<FIELD>>'/1024/1024/1024, 3)] |  rename slave_name as \"Indexer\" avgVolume AS \"average\" maxVolume AS \"peak\" | sort 5 - \"average\" | fields \"Indexer\", \"average\", \"peak\" | fields - _timediff, slave_guid",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summary_maxavg_indxr(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, split_by_field_name, split_by_label",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b by slave, pool, _time | stats sum(b) AS volume by _time | stats avg(volume) AS avgVolume max(volume) AS maxVolume  | eval maxVolumeGB=round(maxVolume/1024/1024/1024,3) | eval avgVolumeGB=round(avgVolume/1024/1024/1024,3) | rename avgVolumeGB AS \"average\" maxVolumeGB AS \"peak\" | eval \"All Pools\" = \"\" | fields \"All Pools\", \"average\", \"peak\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summary_maxavg_no_split(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, split_by_field_name, split_by_label",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b by slave, pool, _time | stats sum(b) AS volume by pool, _time  | stats avg(volume) AS avgVolume max(volume) AS maxVolume by pool | eval maxVolumeGB=round(maxVolume/1024/1024/1024,3) | eval avgVolumeGB=round(avgVolume/1024/1024/1024,3) | rename avgVolumeGB AS \"average\" maxVolumeGB AS \"peak\" pool as \"Pool\" | fields \"Pool\", \"average\", \"peak\" | sort 5 - \"average\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summary_maxavg_pool(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, size_search, host, pool_clause, split_by_field_name",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b by slave, pool, _time | eval slave_guid=slave | stats max(b) AS volume by slave_guid, _time | join type=outer slave_guid [rest splunk_server=$splunk_server$ /services/licenser/slaves | rename label AS slave_name title AS slave_guid | table slave_guid slave_name] | eval slave_name = if(isnotnull(slave_name),slave_name,\"GUID: \".slave_guid) | timechart span=1d max(volume) AS \"volume\" by slave_name fixedrange=false | `$size_search$($host$, \"$pool_clause$\")` | foreach * [eval <<FIELD>>=round('<<FIELD>>'/1024/1024/1024, 3)]",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summery_indxr(5)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, size_search, host, pool_clause, split_by_field_name",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b by slave, pool, _time | timechart span=1d sum(b) AS \"volume\" fixedrange=false | `$size_search$($host$, \"$pool_clause$\")` | foreach * [eval <<FIELD>>=round('<<FIELD>>'/1024/1024/1024, 3)]",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summery_no_split(5)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, sz_clause, host, split_by_field_name",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b latest($sz_clause$) AS $sz_clause$ by slave, pool, _time | stats sum(b) AS volumeB max($sz_clause$) AS $sz_clause$ by slave, _time | eval pctused=round(volumeB/$sz_clause$*100,2) | eval slave_guid=slave | join type=outer slave_guid [rest splunk_server=$splunk_server$ /services/licenser/slaves | rename label AS slave_name title AS slave_guid | table slave_guid slave_name] | eval slave_name = if(isnotnull(slave_name),slave_name,\"GUID: \".slave_guid) | timechart span=1d max(pctused) AS \"used\" by slave_name fixedrange=false",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summery_pct_indxr(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, sz_clause, host, split_by_field_name",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b latest($sz_clause$) AS $sz_clause$ by slave, pool, _time | stats sum(b) AS volumeB max($sz_clause$) AS $sz_clause$ by _time | eval pctused=round(volumeB/$sz_clause$*100,2) | timechart span=1d max(pctused) AS \"used\" fixedrange=false",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summery_pct_no_split(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, sz_clause, host, split_by_field_name",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b latest($sz_clause$) AS $sz_clause$ by slave, pool, _time | stats sum(b) AS volumeB max($sz_clause$) AS $sz_clause$ by pool, _time | eval pctused=round(volumeB/$sz_clause$*100,2) | timechart span=1d max(pctused) AS \"used\" by pool fixedrange=false",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summery_pct_pool(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, size_search, host, pool_clause, split_by_field_name",
+"definition": "eval _time=_time - 43200 | bin _time span=1d | stats latest(b) AS b by slave, pool, _time | timechart span=1d sum(b) AS \"volume\" by pool fixedrange=false | `$size_search$($host$, \"$pool_clause$\")` | foreach * [eval <<FIELD>>=round('<<FIELD>>'/1024/1024/1024, 3)]",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_summery_pool(5)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, size_search, host, pool_clause, split_by_field_name",
+"definition": "timechart span=1d sum(b) AS volumeB by $split_by_field_name$ fixedrange=false | `$size_search$($host$, \"$pool_clause$\")` | foreach * [eval <<FIELD>>=round('<<FIELD>>'/1024/1024/1024, 3)]",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_usage_all(5)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, split_by_field_name, split_by_label",
+"definition": "stats sum(b) AS volume by $split_by_field_name$, _time | stats avg(volume) AS avgVolume max(volume) AS maxVolume by $split_by_field_name$ | eval avgVolumeGB=round(avgVolume/1024/1024/1024,3) | eval maxVolumeGB=round(maxVolume/1024/1024/1024,3) | fields $split_by_field_name$, avgVolumeGB, maxVolumeGB | rename avgVolumeGB AS \"average\" maxVolumeGB AS \"peak\" $split_by_field_name$ AS \"$split_by_label$\" | sort 5 - \"average\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_usage_maxavg_all(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "splunk_server, sz_clause, host, split_by_field_name",
+"definition": "join _time pool type=outer [search `dmc_set_index_internal` host=$host$ source=*license_usage.log* type=\"RolloverSummary\" earliest=-30d@d | eval _time=_time - 43200 | bin _time span=1d | stats latest($sz_clause$) AS $sz_clause$ by slave, pool, _time | stats max($sz_clause$) AS $sz_clause$ by pool, _time] | stats sum(b) AS bytes_used max($sz_clause$) AS $sz_clause$ by $split_by_field_name$, _time | timechart span=1d max(eval(round(bytes_used/$sz_clause$*100,2))) by $split_by_field_name$ fixedrange=false",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_licensing_usage_pct_all(4)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=load_average \"0-0.75\"=0-0.75 \"0.75-1.5\"=0.75001-1.5 \"1.5+\"=1.50001-999999 default=abnormal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_load_average_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_load_average_rangemap` \n| `dmc_timechart` partial=f dc(server) as server_count by range \n| fields _time, \"1.5+\", \"0.75-1.5\", \"0-0.75\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_load_average_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "((data.search_props.type=\"datamodel acceleration\" OR search_props.type=\"datamodel acceleration\") OR (data.search_props.type=\"report acceleration\" OR search_props.type=\"report acceleration\") OR (data.search_props.type=\"scheduled\" OR search_props.type=\"scheduled\") OR (data.search_props.type=\"summary indexing\" OR search_props.type=\"summary indexing\"))",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_match_all_scheduled_search_types",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=resource_usage \n\"0GB\"=0-0 \n\"<1GB\"=0.01-1024 \n\"1-2GB\"=1024.001-2048 \n\"2-3GB\"=2048.001-3072 \n\"3-4GB\"=3072.001-4096 \n\"4-5GB\"=4096.001-5120 \n\"5-10GB\"=5120.001-10240 \n\"10-15GB\"=10240.001-15360 \n\"15-20GB\"=15360.001-20480 \n\"20-30GB\"=20480.001-30720 \n\"30GB+\"=30720.001-999999 \ndefault=\"0GB\" \n| eval resource_usage = round(resource_usage / 1024, 3)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_mem_used_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_mem_used_rangemap` \n| `dmc_timechart` partial=f dc(host) AS host_count by range \n| fields _time, \"30GB+\" \"20-30GB\" \"15-20GB\" \"5-10GB\" \"4-5GB\" \"3-4GB\" \"2-3GB\" \"1-2GB\" \"<1GB\" \"0GB\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_mem_used_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=pct_mem_used \"0-60%\"=0-0.6 \"60-80%\"=0.6001-0.8 \"80-100%\"=0.8001-1 default=abnormal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_memory_usage_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_memory_usage_rangemap` \n| `dmc_timechart` partial=f dc(server) as server_count by range \n| fields _time, \"80-100%\", \"60-80%\", \"0-60%\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_memory_usage_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=resource_usage \n\"0 cores\"=0-0.009 \n\"0.01-1 cores\"=0.01-1 \n\"1-2 cores\"=1.01-2 \n\"2-3 cores\"=2.01-3 \n\"3-4 cores\"=3.01-4 \n\"4-5 cores\"=4.01-5 \n\"5-10 cores\"=5.01-10 \n\"10-15 cores\"=10.01-15 \n\"15-20 cores\"=15.01-20 \n\"20-25 cores\"=20.01-25 \n\"25-30 cores\"=25.01-30 \n\"30+ cores\"=30.01-999 \n\"negative\"=-99999--0.001 \ndefault=\"0 cores\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_pct_cpu_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_pct_cpu_rangemap` \n| `dmc_timechart` partial=f dc(host) AS host_count by range \n| fields _time, \"30+ cores\" \"25-30 cores\" \"20-25 cores\" \"15-20 cores\" \"10-15 cores\" \"5-10 cores\" \"4-5 cores\" \"3-4 cores\" \"2-3 cores\" \"1-2 cores\" \"0.01-1 cores\" \"0 cores\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_pct_cpu_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "role",
+"definition": "eval $role$ = mvmap($role$, case( \n    $role$ = \"cluster_master\", \"Cluster Manager\", \n    $role$ = \"search_head\", \"Search Head\", \n    $role$ = \"indexer\", \"Indexer\", \n    $role$ = \"kv_store\", \"KV Store\", \n    $role$ = \"license_master\", \"License Manager\"))",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_pretty_print_role(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=fill_percentage \"0-60%\"=0-60 \"60-80%\"=60.01-80 \"80-100%\"=80.01-100",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_queue_fill_ratio_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_queue_fill_ratio_rangemap` \n| timechart partial=f dc(host) by range \n| fields _time \"80-100%\" \"60-80%\" \"0-60%\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_queue_fill_ratio_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=cpu_system_pct #53A051=0-59.999 #F1813F=60-79.999 default=#DC4E41",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_cpu_system_pct",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=cpu_system_pct #53A051=0-59.999 #F1813F=60-79.999 default=#DC4E41",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_default_cpu_system_pct",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=average_KBps #CEE4EE=0-99.999 #6BAECA=100-999.999 #0877A6=1000-4999 #005E86=5000-9999 default=#004664",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_default_indexing_rate",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=mem_used #53A051=0-59.999 #F1813F=60-79.999 default=#DC4E41",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_default_mem_used",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=search_concurrency #CEE4EE=0-5.999 #6BAECA=6-10.999 #0877A6=11-20.999 default=#005E86",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_default_search_concurrency",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=up_down_status #DC4E41=0-0.999 default=#53A051",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_default_up_down_status",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=average_KBps #CEE4EE=0-99.999 #6BAECA=100-999.999 #0877A6=1000-4999 #005E86=5000-9999 default=#004664",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_indexing_rate",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=mem_used #53A051=0-59.999 #F1813F=60-79.999 default=#DC4E41",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_mem_used",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=search_concurrency #CEE4EE=0-5.999 #6BAECA=6-10.999 #0877A6=11-20.999 default=#005E86",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_search_concurrency",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=up_down_status #DC4E41=0-0.999 default=#53A051",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rangemap_up_down_status",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "sparkline_span",
+"definition": "`dmc_build_forwarder_assets($sparkline_span$)` \n| rename new_sum_kb as sum_kb, new_avg_tcp_kbps_sparkline as avg_tcp_kbps_sparkline, new_avg_tcp_kbps as avg_tcp_kbps, new_avg_tcp_eps as avg_tcp_eps \n| eval avg_tcp_kbps_sparkline = \"N/A\" \n| addinfo \n| eval status = if(isnull(sum_kb) or (sum_kb <= 0) or (last_connected < (info_max_time - 900)), \"missing\", \"active\") \n| eval sum_kb = round(sum_kb, 2) \n| eval avg_tcp_kbps = round(avg_tcp_kbps, 2) \n| eval avg_tcp_eps = round(avg_tcp_eps, 2) \n| fields guid, hostname, forwarder_type, version, arch, os, status, last_connected, sum_kb, avg_tcp_kbps_sparkline, avg_tcp_kbps, avg_tcp_eps \n| outputlookup dmc_forwarder_assets",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_re_build_forwarder_assets(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "sparkline_span",
+"definition": "`dmc_build_forwarder_assets($sparkline_span$)` \n| rename new_sum_kb as sum_kb, new_avg_tcp_kbps_sparkline as avg_tcp_kbps_sparkline, new_avg_tcp_kbps as avg_tcp_kbps, new_avg_tcp_eps as avg_tcp_eps \n| eval avg_tcp_kbps_sparkline = \"N/A\" \n| addinfo \n| eval status = if(isnull(sum_kb) or (sum_kb <= 0) or (last_connected < (relative_time(now(),\"-15m\"))), \"missing\", \"active\") \n| eval sum_kb = round(sum_kb, 2) \n| eval avg_tcp_kbps = round(avg_tcp_kbps, 2) \n| eval avg_tcp_eps = round(avg_tcp_eps, 2) \n| fields guid, hostname, forwarder_type, version, arch, os, status, last_connected, sum_kb, avg_tcp_kbps_sparkline, avg_tcp_kbps, avg_tcp_eps \n| outputlookup dmc_forwarder_assets",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_re_build_forwarder_assets_light(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "type",
+"definition": "eval $type$ = case($type$ == \"full\", \"Heavy Forwarder\", $type$ == \"uf\", \"Universal Forwarder\", $type$ == \"lwf\", \"Light Forwarder\", 1==1, $type$)",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_rename_forwarder_type(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "eval process = 'data.process' \n| eval args = 'data.args' \n| eval pid = 'data.pid' \n| eval ppid = 'data.ppid' \n| eval elapsed = 'data.elapsed' \n| eval mem_used = 'data.mem_used' \n| eval mem = 'data.mem' \n| eval pct_memory = 'data.pct_memory' \n| eval normalized_pct_cpu = 'data.normalized_pct_cpu' \n| eval pct_cpu = 'data.pct_cpu' \n| eval sid = 'data.search_props.sid' \n| eval app = 'data.search_props.app' \n| eval label = 'data.search_props.label' \n| eval type = 'data.search_props.type' \n| eval mode = 'data.search_props.mode' \n| eval user = 'data.search_props.user' \n| eval role = 'data.search_props.role' \n| eval label = if(isnotnull('data.search_props.label'), 'data.search_props.label', \"\") \n| eval provenance = if(isnotnull('data.search_props.provenance'), 'data.search_props.provenance', \"unknown\") \n| eval search_head = case(isnotnull('data.search_props.search_head') AND 'data.search_props.role' == \"peer\", 'data.search_props.search_head', isnull('data.search_props.search_head') AND 'data.search_props.role' == \"head\", \"_self\", isnull('data.search_props.search_head') AND 'data.search_props.role' == \"peer\", \"_unknown\") \n| eval workload_pool = if(isnotnull('data.workload_pool'), 'data.workload_pool', \"UNDEFINED\")",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_rename_introspection_fields",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=lag \"0-10s\"=0-10 \"10-30s\"=10.001-30 \">30s\"=30.001-10000000 default=abnormal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_replication_lag_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "resource_type, function",
+"definition": "`dmc_set_bin` \n| `dmc_rename_introspection_fields` \n| stats latest($resource_type$) AS resource_usage_dedup latest(process_class) AS process_class by pid, _time \n| stats sum(resource_usage_dedup) AS resource_usage by _time, process_class \n| timechart minspan=10s $function$(resource_usage) AS \"Resource Usage\" by process_class",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_resource_usage_by_processes_timechart(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host",
+"definition": "`dmc_set_index_introspection` sourcetype=splunk_resource_usage component=PerProcess host=$host$ \n| `dmc_rename_introspection_fields` \n| `dmc_classify_processes` \n| eval args = if(isnotnull(sid),\"search --id=\".sid.\" (...)\", args) \n| eval cmd = process.\" \".args \n| stats latest(pid) as \"PID\", latest(ppid) as \"PPID\", latest(label) as Label, latest(provenance) as Provenance, latest(search_head) as \"Search Head\", latest(type) as Type, latest(user) as User, latest(app) as App, latest(mode) as Mode, latest(role) as Role, avg(pct_cpu) as avg_pct_cpu, max(mem_used) as \"Physical Memory Usage (MB)\", min(_time) as min_time, max(_time) as max_time, max(elapsed) as \"Elapsed Time\" by cmd \n| eval avg_pct_cpu = round(avg_pct_cpu, 2) \n| `dmc_time_format(min_time)` \n| `dmc_time_format(max_time)` \n| rename avg_pct_cpu as \"Average CPU Usage (%)\", min_time as \"First Time Seen\", max_time as \"Last Time Seen\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_resource_usage_instance_drilldown(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, concurrencySplitBy, type",
+"definition": "`dmc_set_index_introspection` host=$host$ sourcetype=splunk_resource_usage component=PerProcess data.search_props.sid::* `dmc_match_all_scheduled_search_types` \n| `dmc_rename_introspection_fields` \n| where $concurrencySplitBy$==\"$type$\" \n| stats latest(pid) as \"PID\", latest(ppid) as \"PPID\", latest(label) as Label, latest(provenance) as Provenance, latest(search_head) as \"Search Head\", latest(type) as Type, latest(user) as User, latest(app) as App, latest(mode) as Mode, latest(role) as Role, avg(pct_cpu) as avg_pct_cpu, max(mem_used) as \"Physical Memory Usage (MB)\", min(_time) as min_time, max(_time) as max_time, max(elapsed) as \"Elapsed Time\" by sid \n| eval avg_pct_cpu = round(avg_pct_cpu, 2) \n| `dmc_time_format(min_time)` \n| `dmc_time_format(max_time)` \n| rename avg_pct_cpu as \"Average CPU Usage (%)\", min_time as \"First Time Seen\", max_time as \"Last Time Seen\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_scheduler_instance_search_concurrency_drilldown(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "host, concurrencySplitBy, type",
+"definition": "`dmc_set_index_introspection` host=$host$ sourcetype=splunk_resource_usage component=PerProcess data.search_props.sid::* \n| `dmc_rename_introspection_fields` \n| where $concurrencySplitBy$==\"$type$\" \n| stats latest(pid) as \"PID\", latest(ppid) as \"PPID\", latest(label) as Label, latest(provenance) AS Provenance, latest(search_head) as \"Search Head\", latest(type) as Type, latest(user) as User, latest(app) as App, latest(mode) as Mode, latest(role) as Role, avg(pct_cpu) as avg_pct_cpu, max(mem_used) as \"Physical Memory Usage (MB)\", min(_time) as min_time, max(_time) as max_time, max(elapsed) as \"Elapsed Time\" by sid \n| eval avg_pct_cpu = round(avg_pct_cpu, 2) \n| `dmc_time_format(min_time)` \n| `dmc_time_format(max_time)` \n| rename avg_pct_cpu as \"Average CPU Usage (%)\", min_time as \"First Time Seen\", max_time as \"Last Time Seen\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_search_activity_instance_drilldown(3)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "rangemap field=search_count \"0\"=0-0 \"1-5\"=1-5 \"6-10\"=6-10 \"11-15\"=11-15 \"16-20\"=16-20 \"21-30\"=21-30 \"31-40\"=31-40 \"41-50\"=41-50 \"51-75\"=51-75 \"76-100\"=76-100 \"101+\"=101-99999",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_search_count_rangemap",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "`dmc_search_count_rangemap` \n| `dmc_timechart` dc(host) AS count_host by range \n| fields _time \"101+\" \"76-100\" \"51-75\" \"41-50\" \"31-40\" \"21-30\" \"16-20\" \"11-15\" \"6-10\" \"1-5\" \"0\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_search_count_rangemap_and_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "bin _time span=10s",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_bin",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "bin _time span=10min",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_bin_for_disk_usage",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "bin _time minspan=1min",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_set_bin_for_iostats",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "bin _time minspan=30s",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_bin_for_metrics_log",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "bin _time minspan=10s",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_bin_for_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "bin _time minspan=10min",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_bin_for_timechart_for_disk_usage",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "search_group",
+"definition": "eval label = replace($search_group$, \"^dmc_\\w*group_\", \"\") \n| eval label = case( \n    $search_group$ == \"dmc_group_indexer\", \"Indexer\", \n    $search_group$ == \"dmc_group_search_head\", \"Search Head\", \n    $search_group$ == \"dmc_group_cluster_master\", \"Cluster Manager\", \n    $search_group$ == \"dmc_group_cluster_manager\", \"Cluster Manager\", \n    $search_group$ == \"dmc_group_license_master\", \"License Manager\", \n    $search_group$ == \"dmc_group_license_manager\", \"License Manager\", \n    $search_group$ == \"dmc_group_deployment_server\", \"Deployment Server\", \n    $search_group$ == \"dmc_group_kv_store\", \"KV Store\", \n    $search_group$ == \"dmc_group_shc_deployer\", \"SHC Deployer\", \n    like($search_group$, \"dmc_customgroup_%\"), label.\"  (custom)\", \n    like($search_group$, \"dmc_indexerclustergroup_%\"), label.\" (Indexer Cluster)\", \n    like($search_group$, \"dmc_searchheadclustergroup_%\"), label.\" (Search Head Cluster)\", \n    1 == 1, label.\" (Unrecognized)\") \n| eval order = case( \n    like($search_group$, \"dmc_group_%\"), 100, \n    like($search_group$, \"dmc_customgroup_%\"), 200, \n    like($search_group$, \"dmc_indexerclustergroup_%\"), 300, \n    like($search_group$, \"dmc_searchheadclustergroup_%\"), 400, \n    1 == 1, \"500\") \n| sort order, $search_group$ \n| fields - order",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_group_label_and_sort(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "index=_audit",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_index_audit",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "index=_internal",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_index_internal",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "index=_introspection",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_set_index_introspection",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "field, group",
+"definition": "`dmc_get_forwarder_tcpin` search_group=dmc_group_indexer search_group=$group$ \n| `dmc_timechart_for_metrics_log` dc(guid) as forwarder_count by $field$ \n| rename forwarder_count as \"Forwarder Count\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_tcp_forwarder_count_split_by(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "field, group",
+"definition": "`dmc_get_forwarder_tcpin` search_group=dmc_group_indexer search_group=$group$ \n| `dmc_timechart_for_metrics_log` per_second(kb) as avg_tcp_KBps by $field$ \n| rename avg_tcp_KBps as \"KB/s\"",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_tcp_throughput_split_by(2)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "time",
+"definition": "eval $time$ = strftime($time$, \"%m/%d/%Y %H:%M:%S %z\")",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_time_format(1)",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "timechart minspan=10s",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_timechart",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "timechart minspan=10min",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_timechart_for_disk_usage",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "timechart minspan=60s partial=f",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_timechart_for_iostats",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "timechart minspan=30s",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "0",
+"name": "dmc_timechart_for_metrics_log",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"definition": "timechart minspan=300s",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"name": "dmc_timechart_for_metrics_reaper_and_heartbeat",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"args": "time_modifier",
+"definition": "tostring(relative_time(time(), \"$time_modifier$\"))",
+"disabled": "0",
+"eai:appName": "splunk_monitoring_console",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "time_modifier(1)",
+"owner": "nobody",
+"sharing": "app"
+}
+]

@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav search_view=\"search\">\n    <view name=\"search\"/>\n    <view name=\"audit_trail_home\" default=\"true\"/>\n    <view name=\"activities_per_user_audit\"/>\n    <view name=\"knowledge_objects_audit\"/>\n</nav>\n",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]

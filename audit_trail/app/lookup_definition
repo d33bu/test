@@ -1,0 +1,16 @@
+[
+{
+"fields_list": "DEST_ACTION,ORIG_ACTION",
+"filename": "action_types.csv",
+"name": "action_types_normalization",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"fields_list": "DEST_OBJECT_TYPE,ORIG_OBJECT_TYPE",
+"filename": "object_types.csv",
+"name": "object_types_normalization",
+"owner": "nobody",
+"sharing": "app"
+}
+]

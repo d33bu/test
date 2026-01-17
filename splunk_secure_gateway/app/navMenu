@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav>\n    <view name=\"home\" default=\"true\"/>\n    <view name=\"administration\" />\n    <collection label=\"Dashboards\">\n        <view name=\"secure_gateway_status_dashboard\" />\n        <view name=\"recent_ssg_dashboard_activity\"/>\n        <collection label=\"Troubleshooting Dashboards\">\n            <view name=\"request_tracing_dashboard\"/>\n            <view name=\"subscription_tracing_dashboard\"/>\n            <view name=\"test_dashboard_single_value\"/>\n            <view name=\"ssg_e2e_wss_test\"/>\n            <view name=\"kvstore_dashboard_client\"/>\n            <view name=\"subscription_search_inspector\"/>\n            <view name=\"saml_troubleshooting_dashboard\"/>\n        </collection>\n    </collection>\n</nav>",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]

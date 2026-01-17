@@ -1,0 +1,11 @@
+[
+{
+"name": "log_level,app_name,module_name,function_name,process_id",
+"origName": "secure_gateway_app_internal_log : EXTRACT-log_level,app_name,module_name,function_name,process_id",
+"owner": "nobody",
+"sharing": "global",
+"stanza": "secure_gateway_app_internal_log",
+"type": "EXTRACT",
+"value": "^(?:[^ \\n]* ){2}(?P<log_level>[^ ]+)\\s+\\[(?P<app_name>[^\\]]+)[^\\[\\n]*\\[(?P<module_name>[^\\]]+)[^ \\n]* \\[(?P<function_name>\\w+)\\]\\s+\\[(?P<process_id>[^\\]]+)"
+}
+]

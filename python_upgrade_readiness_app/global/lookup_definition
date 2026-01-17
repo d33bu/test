@@ -1,0 +1,225 @@
+[
+{
+"collection": "era_email_notification_switch",
+"external_type": "kvstore",
+"fields_list": "is_era_email_enabled, is_updated",
+"name": "era_email_notification_switch",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_email_receivers_list",
+"external_type": "kvstore",
+"fields_list": "name, email, roles, selected",
+"name": "era_email_receivers_list",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_page_visits",
+"external_type": "kvstore",
+"fields_list": "user, time_stamp",
+"name": "era_page_visits",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_remote_dismiss_app",
+"external_type": "kvstore",
+"fields_list": "app, app_path, dismissed_by, dismiss_app_date",
+"name": "era_remote_dismiss_app",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_remote_dismiss_file",
+"external_type": "kvstore",
+"fields_list": "app, check, file_path, app_path, instance, dismissed_by, dismiss_file_date",
+"name": "era_remote_dismiss_file",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_remote_dismiss_system_check",
+"external_type": "kvstore",
+"fields_list": "check_name, dismiss_check_date",
+"name": "era_remote_dismiss_system_check",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_remote_export_report",
+"external_type": "kvstore",
+"fields_list": "app, exported_by, export_report_date",
+"name": "era_remote_export_report",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_remote_schedule_scan",
+"external_type": "kvstore",
+"fields_list": "disabled, schedule_scan_type, day, hours, minutes, am_pm, time_offset, is_updated",
+"name": "era_remote_schedule_scan",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "era_remote_send_email",
+"external_type": "kvstore",
+"fields_list": "app, emailed_by, email_date",
+"name": "era_remote_send_email",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "jra_email_receivers_list",
+"external_type": "kvstore",
+"fields_list": "name, email, roles, selected",
+"name": "jra_email_receivers_list",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "jra_page_visits",
+"external_type": "kvstore",
+"fields_list": "user, time_stamp",
+"name": "jra_page_visits",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "jra_remote_dismiss_app",
+"external_type": "kvstore",
+"fields_list": "app, app_path, dismissed_by, dismiss_app_date",
+"name": "jra_remote_dismiss_app",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "jra_remote_dismiss_file",
+"external_type": "kvstore",
+"fields_list": "app, check, file_path, app_path, instance, dismissed_by, dismiss_file_date",
+"name": "jra_remote_dismiss_file",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "jra_remote_export_report",
+"external_type": "kvstore",
+"fields_list": "app, exported_by, export_report_date",
+"name": "jra_remote_export_report",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "jra_remote_schedule_scan",
+"external_type": "kvstore",
+"fields_list": "disabled, schedule_scan_type, day, hours, minutes, am_pm, time_offset, is_updated",
+"name": "jra_remote_schedule_scan",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "jra_remote_send_email",
+"external_type": "kvstore",
+"fields_list": "app, emailed_by, email_date",
+"name": "jra_remote_send_email",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_email_receivers_list",
+"external_type": "kvstore",
+"fields_list": "name, email, roles, selected",
+"name": "pra_email_receivers_list",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_jra_email_notification_switch",
+"external_type": "kvstore",
+"fields_list": "is_pra_email_enabled, is_jra_email_enabled, is_updated",
+"name": "pra_jra_email_notification_switch",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_page_visits",
+"external_type": "kvstore",
+"fields_list": "user, time_stamp",
+"name": "pra_page_visits",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_remote_dismiss_app",
+"external_type": "kvstore",
+"fields_list": "app, app_path, dismissed_by, dismiss_app_date",
+"name": "pra_remote_dismiss_app",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_remote_dismiss_file",
+"external_type": "kvstore",
+"fields_list": "app, check, file_path, app_path, instance, dismissed_by, dismiss_file_date",
+"name": "pra_remote_dismiss_file",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_remote_export_report",
+"external_type": "kvstore",
+"fields_list": "app, exported_by, export_report_date",
+"name": "pra_remote_export_report",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_remote_schedule_scan",
+"external_type": "kvstore",
+"fields_list": "disabled, schedule_scan_type, day, hours, minutes, am_pm, time_offset, is_updated",
+"name": "pra_remote_schedule_scan",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_remote_send_email",
+"external_type": "kvstore",
+"fields_list": "app, emailed_by, email_date",
+"name": "pra_remote_send_email",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "pra_user_records",
+"external_type": "kvstore",
+"fields_list": "host_name, user_name, user_role, action, request_timestamp, description, stack_id",
+"name": "pra_user_records",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"fields_list": "app_folder_name",
+"filename": "pura_mark_public_as_private.csv",
+"name": "pura_mark_public_as_private",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "ura_clear_cache_global",
+"external_type": "kvstore",
+"fields_list": "last_clear_time",
+"name": "ura_clear_cache_global",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"collection": "ura_clear_cache_local",
+"external_type": "kvstore",
+"fields_list": "last_clear_time, hostname",
+"name": "ura_clear_cache_local",
+"owner": "nobody",
+"sharing": "global"
+}
+]

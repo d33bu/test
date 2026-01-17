@@ -1,0 +1,16 @@
+[
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view isDashboard=\"false\" type=\"redirect\" target=\"analytics_workspace\">\n\t<label>Analytics</label>\n</view>",
+"eai:type": "views",
+"name": "analysis_workspace",
+"owner": "nobody",
+"sharing": "global"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_metrics_workspace:/templates/base-page.html\" type=\"html\" isDashboard=\"false\">\n\t<label>Analytics</label>\n</view>",
+"eai:type": "views",
+"name": "analytics_workspace",
+"owner": "nobody",
+"sharing": "global"
+}
+]

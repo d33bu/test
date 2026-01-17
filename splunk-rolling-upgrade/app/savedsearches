@@ -1,0 +1,42 @@
+[
+{
+"action.outputtelemetry": "1",
+"action.outputtelemetry.param.anonymous": "1",
+"action.outputtelemetry.param.component": "app.IDXCUpgrade.executeStatistics",
+"action.outputtelemetry.param.input": "event",
+"action.outputtelemetry.param.license": "0",
+"action.outputtelemetry.param.optinrequired": "3",
+"action.outputtelemetry.param.support": "1",
+"action.outputtelemetry.param.type": "aggregate",
+"actions": "outputtelemetry",
+"alert.track": "0",
+"alert_type": "always",
+"cron_schedule": "0 3 * * *",
+"dispatch.earliest_time": "-1d",
+"is_scheduled": "1",
+"name": "IDXC Upgrade Telemetry: Execution statistics",
+"owner": "nobody",
+"search": "index=\"_internal\" sourcetype=\"splunk_idx_upgrade_upgrader_script\" telemetry_id=* telemetry_tot_peers=* telemetry_status=* telemetry_deployment_type=* telemetry_site=* telemetry_reason=* telemetry_from_version=* telemetry_to_version=* \n| table telemetry_id, telemetry_deployment_type, telemetry_site, telemetry_tot_peers, telemetry_status, telemetry_reason, telemetry_from_version, telemetry_to_version, _time \n| stats count as data.count by telemetry_id, telemetry_deployment_type, telemetry_site, telemetry_tot_peers, telemetry_status, telemetry_reason, telemetry_from_version, telemetry_to_version, _time \n| rename telemetry_id as data.upgrade_id, telemetry_deployment_type as data.deployment_type, telemetry_site as data.site_name, telemetry_tot_peers as data.tot_peers, _time as data.last_update, telemetry_status as data.upgrade_status, telemetry_reason as data.reason, telemetry_from_version as data.from_version, telemetry_to_version as data.to_version \n| makejson data.* output=event",
+"sharing": "app"
+},
+{
+"action.outputtelemetry": "1",
+"action.outputtelemetry.param.anonymous": "1",
+"action.outputtelemetry.param.component": "app.SHCUpgrade.executeStatistics",
+"action.outputtelemetry.param.input": "event",
+"action.outputtelemetry.param.license": "0",
+"action.outputtelemetry.param.optinrequired": "3",
+"action.outputtelemetry.param.support": "1",
+"action.outputtelemetry.param.type": "aggregate",
+"actions": "outputtelemetry",
+"alert.track": "0",
+"alert_type": "always",
+"cron_schedule": "0 3 * * *",
+"dispatch.earliest_time": "-1d",
+"is_scheduled": "1",
+"name": "SHC Upgrade Telemetry: Execution statistics",
+"owner": "nobody",
+"search": "index=\"_internal\" (sourcetype=\"splunk_shc_upgrade_upgrader_script\" OR sourcetype=\"splunk_shc_upgrade_completion_script\" OR sourcetype=\"splunk_shc_upgrade_rest_endpoints\") telemetry_id=* telemetry_peers=* telemetry_status=* telemetry_deployment_type=* telemetry_reason=* telemetry_from_version=* telemetry_to_version=* \n| table telemetry_id telemetry_peers telemetry_status telemetry_deployment_type telemetry_reason telemetry_from_version telemetry_to_version _time \n| eval encrypted_peer_names=substr(sha256(telemetry_peers),0,12) \n| stats count AS data.count by telemetry_id, encrypted_peer_names, telemetry_status, telemetry_deployment_type, telemetry_reason, telemetry_from_version, telemetry_to_version, _time \n| rename telemetry_id as data.upgrade_id, encrypted_peer_names as data.encrypted_peer_names, telemetry_status as data.upgrade_status, telemetry_deployment_type as data.deployment_type, _time as data.last_update, telemetry_reason as data.reason, telemetry_from_version as data.from_version, telemetry_to_version as data.to_version \n| makejson data.* output=event",
+"sharing": "app"
+}
+]

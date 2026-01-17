@@ -1,0 +1,68 @@
+[
+{
+"CAN_OPTIMIZE": "1",
+"CLEAN_KEYS": "1",
+"CLONE_SOURCETYPE": "splunk_intro_disk_objects",
+"KEEP_EMPTY_VALS": "0",
+"MV_ADD": "0",
+"REGEX": "(.)",
+"SOURCE_KEY": "MetaData:Source",
+"disabled": "0",
+"name": "introspection_disk_objects_log_clone",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"CAN_OPTIMIZE": "1",
+"CLEAN_KEYS": "1",
+"CLONE_SOURCETYPE": "splunk_intro_resource_usage",
+"KEEP_EMPTY_VALS": "0",
+"MV_ADD": "0",
+"REGEX": "(.)",
+"SOURCE_KEY": "MetaData:Source",
+"disabled": "0",
+"name": "introspection_resource_usage_log_clone",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"CAN_OPTIMIZE": "1",
+"CLEAN_KEYS": "1",
+"FORMAT": "$1::$2",
+"KEEP_EMPTY_VALS": "0",
+"MV_ADD": "0",
+"REGEX": "([a-zA-Z0-9_\\.]+)=\\\"?([a-zA-Z0-9_\\.:-]+)",
+"REPEAT_MATCH": "true",
+"SOURCE_KEY": "_raw",
+"disabled": "0",
+"name": "metrics_field_extraction",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"CAN_OPTIMIZE": "1",
+"CLEAN_KEYS": "1",
+"FORMAT": "_metrics",
+"KEEP_EMPTY_VALS": "0",
+"MV_ADD": "0",
+"REGEX": ".",
+"SOURCE_KEY": "_raw",
+"disabled": "0",
+"name": "metrics_index_redirect",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"CAN_OPTIMIZE": "1",
+"CLEAN_KEYS": "1",
+"CLONE_SOURCETYPE": "splunk_metrics_log",
+"KEEP_EMPTY_VALS": "0",
+"MV_ADD": "0",
+"REGEX": "(.)",
+"SOURCE_KEY": "MetaData:Source",
+"disabled": "0",
+"name": "metrics_log_clone",
+"owner": "nobody",
+"sharing": "app"
+}
+]

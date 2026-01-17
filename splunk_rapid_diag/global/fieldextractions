@@ -1,0 +1,11 @@
+[
+{
+"name": "default_rd_fields",
+"origName": "splunk_rapid_diag : EXTRACT-default_rd_fields",
+"owner": "nobody",
+"sharing": "global",
+"stanza": "splunk_rapid_diag",
+"type": "EXTRACT",
+"value": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3} (?<component>\\S+) (?<log_level>\\S+) (?<thread_id>\\d+) - (?s)(?<event_message>.*)$"
+}
+]

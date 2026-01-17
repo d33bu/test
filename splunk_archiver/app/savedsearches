@@ -1,0 +1,29 @@
+[
+{
+"alert.track": "0",
+"alert_type": "always",
+"cron_schedule": "17 * * * *",
+"description": "Triggers bucket copying",
+"is_scheduled": "1",
+"name": "Bucket Copy Trigger",
+"owner": "nobody",
+"search": "| archivebuckets",
+"sharing": "app"
+},
+{
+"alert.severity": "5",
+"alert.track": "1",
+"alert_comparator": "greater than",
+"alert_threshold": "0",
+"alert_type": "number of events",
+"cron_schedule": "17 0 * * *",
+"description": "Monitors for inactive Hadoop Data Roll (or otherwise virtual index) providers",
+"is_scheduled": "1",
+"name": "Inactive Hadoop Data Roll Providers",
+"owner": "nobody",
+"request.ui_dispatch_app": "search",
+"request.ui_dispatch_view": "search",
+"search": "| rest /services/data/vix-providers \n         | search NOT vix.hadoop_data_roll IN (1 t true y yes) \n         | fields title vix.family splunk_server archive_indexes virtual_indexes",
+"sharing": "app"
+}
+]

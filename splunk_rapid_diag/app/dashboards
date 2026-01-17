@@ -1,0 +1,30 @@
+[
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_rapid_diag:/templates/data_collection.html\" type=\"html\">\n\t<label>Data Collection</label>\n</view>",
+"eai:type": "views",
+"name": "data_collection",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_rapid_diag:/templates/reference_guide.html\" type=\"html\">\n\t<label>Reference Guide</label>\n</view>",
+"eai:type": "views",
+"name": "reference_guide",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_rapid_diag:/templates/task_manager.html\" type=\"html\">\n\t<label>Task Manager</label>\n</view>",
+"eai:type": "views",
+"name": "task_manager",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_rapid_diag:/templates/task_template_wizard.html\" type=\"html\">\n\t<label>Task Templates</label>\n</view>",
+"eai:type": "views",
+"name": "task_template_wizard",
+"owner": "nobody",
+"sharing": "app"
+}
+]

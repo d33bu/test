@@ -1,0 +1,16 @@
+[
+{
+"fields_list": "peerURI,serverName,host,machine,search_group",
+"filename": "assets.csv",
+"name": "dmc_assets",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"fields_list": "guid, hostname, forwarder_type, version, arch, os, status, last_connected, _time, sum_kb, avg_tcp_kbps_sparkline, avg_tcp_kbps, avg_tcp_eps",
+"filename": "dmc_forwarder_assets.csv",
+"name": "dmc_forwarder_assets",
+"owner": "nobody",
+"sharing": "app"
+}
+]

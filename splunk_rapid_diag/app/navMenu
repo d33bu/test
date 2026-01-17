@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav>\n    <view name=\"task_template_wizard\" default=\"true\"/>\n    <view name=\"data_collection\"/>\n    <view name=\"task_manager\"/>\n    <view name=\"reference_guide\"/>\n</nav>",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]

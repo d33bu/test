@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav>\n    <view name=\"splunk9x_scan\" default=\"true\"/>\n</nav>",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]

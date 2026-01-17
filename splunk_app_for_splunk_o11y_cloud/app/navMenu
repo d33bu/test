@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav>\n    <view name=\"config\" default=\"true\"/>\n    <collection label=\"Discover\">\n        <view name = \"home\" />\n        <view name=\"usecases\" />\n    </collection>\n</nav>",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]

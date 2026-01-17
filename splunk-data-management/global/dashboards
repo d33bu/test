@@ -1,0 +1,9 @@
+[
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk-data-management:/templates/index.html\" type=\"html\" isDashboard=\"False\">\n    <label>Data Management</label>\n</view>",
+"eai:type": "views",
+"name": "dm-home",
+"owner": "nobody",
+"sharing": "global"
+}
+]

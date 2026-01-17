@@ -1,0 +1,27 @@
+[
+{
+"batch_index_query": "0",
+"case_sensitive_match": "1",
+"fields_list": "app",
+"filename": "splunkversioncontrol_globalexclusionlist.csv",
+"name": "splunkversioncontrol_globalexclusionlist",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"batch_index_query": "0",
+"case_sensitive_match": "1",
+"filename": "splunkversioncontrol_restorelist.csv",
+"name": "splunkversioncontrol_restorelist",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"batch_index_query": "0",
+"case_sensitive_match": "1",
+"filename": "splunkversioncontrol_taglist.csv",
+"name": "splunkversioncontrol_taglist",
+"owner": "nobody",
+"sharing": "app"
+}
+]

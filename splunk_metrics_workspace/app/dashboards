@@ -1,0 +1,9 @@
+[
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_metrics_workspace:/templates/base-page.html\" type=\"html\" isDashboard=\"false\">\n\t<label>Home</label>\n</view>",
+"eai:type": "views",
+"name": "home",
+"owner": "nobody",
+"sharing": "app"
+}
+]

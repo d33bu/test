@@ -1,0 +1,90 @@
+[
+{
+"name": "status",
+"origName": "scheduler : EVAL-status",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "scheduler",
+"value": "case(status==\"success\", \"completed\", status==\"skipped\", \"skipped\", status==\"continued\", \"deferred\")"
+},
+{
+"name": "data.search_props.label",
+"origName": "splunk_resource_usage : EVAL-data.search_props.label",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunk_resource_usage",
+"value": "if(isnull('data.search_props.label') AND isnotnull('data.search_props.sid'), \"N/A\", 'data.search_props.label')"
+},
+{
+"name": "data.search_props.provenance",
+"origName": "splunk_resource_usage : EVAL-data.search_props.provenance",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunk_resource_usage",
+"value": "if(isnull('data.search_props.provenance') AND isnotnull('data.search_props.sid'), \"unknown\", 'data.search_props.provenance')"
+},
+{
+"name": "app",
+"origName": "splunkd_conf : EVAL-app",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "mvindex('data.asset_uri{}', 1)"
+},
+{
+"name": "from_repo",
+"origName": "splunkd_conf : EVAL-from_repo",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "'data.from_repo'"
+},
+{
+"name": "object_name",
+"origName": "splunkd_conf : EVAL-object_name",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "mvindex('data.asset_uri{}', 3)"
+},
+{
+"name": "object_type",
+"origName": "splunkd_conf : EVAL-object_type",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "mvindex('data.asset_uri{}', 2)"
+},
+{
+"name": "optype_desc",
+"origName": "splunkd_conf : EVAL-optype_desc",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "'data.optype_desc'"
+},
+{
+"name": "owner",
+"origName": "splunkd_conf : EVAL-owner",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "mvindex('data.asset_uri{}', 0)"
+},
+{
+"name": "status",
+"origName": "splunkd_conf : EVAL-status",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "'data.status'"
+},
+{
+"name": "to_repo",
+"origName": "splunkd_conf : EVAL-to_repo",
+"owner": "nobody",
+"sharing": "app",
+"stanza": "splunkd_conf",
+"value": "'data.to_repo'"
+}
+]

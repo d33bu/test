@@ -1,0 +1,98 @@
+[
+{
+"args": "action",
+"definition": "if (\"$action$\" != \"\", \"data.action = $action$\", \"\")",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_action(1)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isStr($action$)"
+},
+{
+"args": "appName",
+"definition": "if (\"$appName$\" != \"\", \"data.appName = $appName$\", \"\")",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_app(1)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isStr($appName$)"
+},
+{
+"args": "has_app_filter",
+"definition": "if (\"$has_app_filter$\" = \"true\", \"countApps > 0\", \"\")",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_app_count(1)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isStr($has_app_filter$)"
+},
+{
+"args": "checksum",
+"definition": "if ($checksum$ > 0, \"data.checksum = $checksum$\", \"\")",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_checksum(1)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isNum($checksum$)"
+},
+{
+"args": "clientId",
+"definition": "if (\"$clientId$\" != \"\", \"data.clientId = $clientId$\", \"\")",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_client_id(1)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isStr($clientId$)"
+},
+{
+"args": "has_error",
+"definition": "if (\"$has_error$\" = \"true\",\n  \"data.result != Ok\",\n  if (\"$has_error$\" = \"false\",\n    \"data.result = Ok\",\n    \"\"\n  )\n)",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_error(1)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isStr($has_error$)"
+},
+{
+"args": "minPhoneHomeTime",
+"definition": "if ($minPhoneHomeTime$ > 0, \"lastPhoneHomeTime >= $minPhoneHomeTime$\", \"\")",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_phonehome(1)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isNum($minPhoneHomeTime$)"
+},
+{
+"args": "greater_than,ratio",
+"definition": "if ($ratio$ > 0, \n  if (\"$greater_than$\" = \"true\",\n    \"actual_ratio > $ratio$\",\n    \"actual_ratio <= $ratio$\"\n  ),\n  \"\"\n)",
+"disabled": "0",
+"eai:appName": "SplunkDeploymentServerConfig",
+"eai:userName": "nobody",
+"iseval": "1",
+"name": "filter_by_ratio(2)",
+"owner": "nobody",
+"sharing": "app",
+"validation": "isStr($greater_than$) AND isNum($ratio$)"
+}
+]

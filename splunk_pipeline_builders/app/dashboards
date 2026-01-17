@@ -1,0 +1,44 @@
+[
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_pipeline_builders:/templates/index.html\" type=\"html\" isDashboard=\"False\">\n\t<label>Destinations</label>\n</view>",
+"eai:type": "views",
+"name": "destinations",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_pipeline_builders:/templates/index.html\" type=\"html\" isDashboard=\"False\">\n\t<label>Edge Processor Troubleshooting</label>\n</view>",
+"eai:type": "views",
+"name": "edge-processor-troubleshooting",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_pipeline_builders:/templates/index.html\" type=\"html\" isDashboard=\"False\">\n\t<label>Edge Processors</label>\n</view>",
+"eai:type": "views",
+"name": "edge-processors",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_pipeline_builders:/templates/index.html\" type=\"html\" isDashboard=\"False\">\n\t<label>Pipelines</label>\n</view>",
+"eai:type": "views",
+"name": "pipelines",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_pipeline_builders:/templates/index.html\" type=\"html\" isDashboard=\"False\">\n\t<label>Setup Edge Processor</label>\n</view>",
+"eai:type": "views",
+"name": "setup",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<?xml version=\"1.0\"?>\n<view template=\"splunk_pipeline_builders:/templates/index.html\" type=\"html\" isDashboard=\"False\">\n\t<label>Synced source types</label>\n</view>",
+"eai:type": "views",
+"name": "source-types",
+"owner": "nobody",
+"sharing": "app"
+}
+]

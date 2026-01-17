@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav search_view=\"search\">\n  <view name=\"splunkversioncontrol_restore_dynamic\" default=\"true\" />\n  <view name=\"search\" default='true' />\n  <view name=\"datasets\" />\n  <view name=\"reports\" />\n  <view name=\"alerts\" />\n  <view name=\"dashboards\" />\n</nav>",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]

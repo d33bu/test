@@ -1,0 +1,37 @@
+[
+{
+"eai:data": "<dashboard version=\"1.1\" hideEdit=\"true\">\n  <label>Upgrade Readiness App</label>\n  <row>\n  \t<panel>\n  \t\t<html>\n  \t\t\t<p>New upgrade checks for future releases of Splunk platform are in the Monitoring Consoles in Splunk Cloud Platform and Splunk Enterprise. The Upgrade Readiness App has been removed from Splunk platform. For more information, see <a href=\"/help?location=learnmore.URA.banner.EOL\" target=\"_blank\">Upgrade Readiness documentation</a>.</p>  \t\t\t\n  \t\t</html>\n  \t</panel>\n  </row>\n</dashboard>",
+"eai:type": "views",
+"name": "jquery_scan",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<dashboard version=\"1.1\" hideEdit=\"true\">\n  <label>Upgrade Readiness App</label>\n  <row>\n  \t<panel>\n  \t\t<html>\n  \t\t\t<p>New upgrade checks for future releases of Splunk platform are in the Monitoring Consoles in Splunk Cloud Platform and Splunk Enterprise. The Upgrade Readiness App has been removed from Splunk platform. For more information, see <a href=\"/help?location=learnmore.URA.banner.EOL\" target=\"_blank\">Upgrade Readiness documentation</a>.</p>  \t\t\t\n  \t\t</html>\n  \t</panel>\n  </row>\n</dashboard>",
+"eai:type": "views",
+"name": "python_scan",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<dashboard version=\"1.1\" hideEdit=\"true\">\n  <label>Upgrade Readiness App</label>\n  <row>\n  \t<panel>\n  \t\t<html>\n  \t\t\t<p>New upgrade checks for future releases of Splunk platform are in the Monitoring Consoles in Splunk Cloud Platform and Splunk Enterprise. The Upgrade Readiness App has been removed from Splunk platform. For more information, see <a href=\"/help?location=learnmore.URA.banner.EOL\" target=\"_blank\">Upgrade Readiness documentation</a>.</p>  \t\t\t\n  \t\t</html>\n  \t</panel>\n  </row>\n</dashboard>",
+"eai:type": "views",
+"name": "setting",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<dashboard version=\"1.1\" hideEdit=\"true\">\n  <label>Upgrade Readiness App</label>\n  <row>\n  \t<panel>\n  \t\t<html>\n  \t\t\t<p>New upgrade checks for future releases of Splunk platform are in the Monitoring Consoles in Splunk Cloud Platform and Splunk Enterprise. The Upgrade Readiness App has been removed from Splunk platform. For more information, see <a href=\"/help?location=learnmore.URA.banner.EOL\" target=\"_blank\">Upgrade Readiness documentation</a>.</p>  \t\t\t\n  \t\t</html>\n  \t</panel>\n  </row>\n</dashboard>",
+"eai:type": "views",
+"name": "setting_scan",
+"owner": "nobody",
+"sharing": "app"
+},
+{
+"eai:data": "<dashboard version=\"1.1\" hideEdit=\"true\">\n  <label>Upgrade Readiness App</label>\n  <row>\n  \t<panel>\n  \t\t<html>\n  \t\t\t<p>New upgrade checks for future releases of Splunk platform are in the Monitoring Consoles in Splunk Cloud Platform and Splunk Enterprise. The Upgrade Readiness App has been removed from Splunk platform. For more information, see <a href=\"/help?location=learnmore.URA.banner.EOL\" target=\"_blank\">Upgrade Readiness documentation</a>.</p>  \t\t\t\n  \t\t</html>\n  \t</panel>\n  </row>\n</dashboard>",
+"eai:type": "views",
+"name": "splunk9x_scan",
+"owner": "nobody",
+"sharing": "app"
+}
+]
