@@ -1,0 +1,9 @@
+[
+{
+"eai:data": "<dashboard script=\"config.js\" stylesheet=\"config.css,OverlayScrollbars.min.css\" hideAppBar=\"true\" version=\"1.1\">\n    <label>Config Explorer</label>\n    <!-- Contents will be injected by Javascript -->\n    <row>\n        <html>\n            <div class=\"ce_spinner spinner\">\n                <div class=\"bounce1\"></div>\n                <div class=\"bounce2\"></div>\n                <div class=\"bounce3\"></div>\n            </div>\n        </html>\n    </row>\n</dashboard>",
+"eai:type": "views",
+"name": "ce",
+"owner": "nobody",
+"sharing": "app"
+}
+]

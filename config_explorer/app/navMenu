@@ -1,0 +1,8 @@
+[
+{
+"eai:data": "<nav search_view=\"search\">\n\t<view name=\"ce\" default='true'/>\n</nav>",
+"name": "default",
+"owner": "nobody",
+"sharing": "app"
+}
+]
